@@ -1,0 +1,32 @@
+{
+    "id": "D220DC43",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1606419401632.0,
+    "source_on_save": false,
+    "relative_order": 10,
+    "properties": {
+        "expression": "GS_ch3",
+        "caption": "GS_ch3",
+        "totalObservations": 27,
+        "displayedObservations": 27,
+        "variables": 12,
+        "cacheKey": "9CEC7C76",
+        "object": "GS_ch3",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=GS_ch3&cache_key=9CEC7C76&max_cols=50",
+        "preview": 0
+    },
+    "folds": "",
+    "lastKnownWriteTime": 13792505790791728,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1606419401632,
+    "read_only": false,
+    "read_only_alternatives": []
+}

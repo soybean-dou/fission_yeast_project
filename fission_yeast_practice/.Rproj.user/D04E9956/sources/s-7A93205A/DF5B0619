@@ -1,0 +1,23 @@
+{
+    "id": "DF5B0619",
+    "path": null,
+    "project_path": null,
+    "type": "r_code_browser",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1606421117311.0,
+    "source_on_save": false,
+    "relative_order": 12,
+    "properties": {
+        "context": ".GlobalEnv:::find_overlapping_gene"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1348555675392,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1606421117311,
+    "read_only": false,
+    "read_only_alternatives": []
+}

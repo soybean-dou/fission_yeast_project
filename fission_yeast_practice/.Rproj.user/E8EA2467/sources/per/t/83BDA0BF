@@ -1,0 +1,32 @@
+{
+    "id": "83BDA0BF",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1606387336775.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "expression": "GSprimer",
+        "caption": "GSprimer",
+        "totalObservations": 263,
+        "displayedObservations": 263,
+        "variables": 12,
+        "cacheKey": "5E22A973",
+        "object": "GSprimer",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=GSprimer&cache_key=5E22A973&max_cols=50",
+        "preview": 0
+    },
+    "folds": "",
+    "lastKnownWriteTime": 19422056864022581,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1606387336775,
+    "read_only": false,
+    "read_only_alternatives": []
+}

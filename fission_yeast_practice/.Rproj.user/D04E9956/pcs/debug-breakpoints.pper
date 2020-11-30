@@ -1,0 +1,66 @@
+{
+    "debugBreakpointsState": {
+        "breakpoints": [
+            {
+                "id": 6,
+                "path": "C:/Users/EunJu/OneDrive - dongguk.edu/DGU/2020_7/개별연구/fisson_yeast_practice/find_overlap_func.r",
+                "line_number": 39,
+                "function_steps": "9,4,2,4,2",
+                "function_name": "find_overlapping_gene",
+                "state": 1,
+                "editor_state": 1,
+                "editor_line_number": 39,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            },
+            {
+                "id": 7,
+                "path": "C:/Users/EunJu/OneDrive - dongguk.edu/DGU/2020_7/개별연구/fisson_yeast_practice/find_overlap_func.r",
+                "line_number": 41,
+                "function_steps": "9,4,2,4,3,3,2",
+                "function_name": "find_overlapping_gene",
+                "state": 1,
+                "editor_state": 1,
+                "editor_line_number": 41,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            },
+            {
+                "id": 8,
+                "path": "C:/Users/EunJu/OneDrive - dongguk.edu/DGU/2020_7/개별연구/fisson_yeast_practice/find_overlap_func.r",
+                "line_number": 44,
+                "function_steps": "9,4,2,4,3,4,3,2",
+                "function_name": "find_overlapping_gene",
+                "state": 1,
+                "editor_state": 1,
+                "editor_line_number": 44,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            },
+            {
+                "id": 9,
+                "path": "C:/Users/EunJu/OneDrive - dongguk.edu/DGU/2020_7/개별연구/fisson_yeast_practice/find_overlap_func.r",
+                "line_number": 47,
+                "function_steps": "9,4,2,4,3,4,4,3,2",
+                "function_name": "find_overlapping_gene",
+                "state": 1,
+                "editor_state": 1,
+                "editor_line_number": 47,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            }
+        ]
+    }
+}
