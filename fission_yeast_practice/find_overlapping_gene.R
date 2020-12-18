@@ -24,6 +24,12 @@ Bprimer<-read.table("bPrimerPos2.tsv", sep = "\t")
 SERIALprimer<-read.table("serialPrimerPos2.tsv")
 
 colnames(GSprimer)<-c("ID","c-id","up_match","u_ch","up_start","up_end","up_strand","down_match","d_ch","down_start","down_end","down_strand")
+colnames(Bprimer)<-c("ID","c-id","match1","1_chr","start1_up","end1_down","strand1",
+                      "match2","2_chr","start2_up","end2_down","strand2",
+                      "match3","3_chr","start3_up","end3_down","strand3",
+                      "match4","4_chr","start4_up","end4_down","strand4",
+                      "match5","5_chr","start5_up","end5_down","strand5",
+                      "match6","6_chr","start6_up","end6_down","strand6")
 #-------------------------------------------------------------
 #------------------find CDS site------------------------------
 
@@ -114,20 +120,21 @@ GS_ch3<-(as.data.frame
                                 1,reverse_negative_strand)))))
 GS_ch3 <- type.convert(GS_ch3, as.is = TRUE)
 
-overlap_strand_gs1<-find_overlapping_gene(GS_ch1,CDS_ch1)
-overlap_strand_gs2<-find_overlapping_gene(GS_ch2,CDS_ch2)
+overlap_strand_gs1<-find_overlapping_gene(GS_ch1,CDS_ch1,y_start_name = "up_start", y_end_name = "down_end")
+overlap_strand_gs2<-find_overlapping_gene(GS_ch2,CDS_ch2,
+                                          x_start_name = "up_start", x_end_name = "down_end", is_strain = TRUE)
 overlap_strand_gs3<-find_overlapping_gene(GS_ch3,CDS_ch3)
 
 
 i<-1
-while(i<nrow(overlap_strand_gs)){
-    if(overlap_strand_gs[i,1]==overlap_strand_gs[i,2])
-        overlap_strand_gs<-overlap_strand_gs[-i,]
+while(i<nrow(overlap_strand_gs2)){
+    if(overlap_strand_gs2[i,1]==overlap_strand_gs2[i,2])
+        overlap_strand_gs2<-overlap_strand_gs2[-i,]
     j<-1
-    while(j<=nrow(overlap_strand_gs)){
+    while(j<=nrow(overlap_strand_gs2)){
         if(j==i){ j<-j+1; next; }
-        if(overlap_strand_gs[i,1] == overlap_strand_gs[j,1]){
-            overlap_strand_gs<-overlap_strand_gs[-j,]
+        if(overlap_strand_gs2[i,1] == overlap_strand_gs2[j,1]){
+            overlap_strand_gs2<-overlap_strand_gs2[-j,]
         }
         j<-j+1
     }
