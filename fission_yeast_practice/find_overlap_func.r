@@ -30,7 +30,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
         x<-as.data.frame(t(as.data.frame(apply(x, 1,reverse_uptag_neg))))
         x <- type.convert(x, as.is = TRUE)
     }
-    x<-x[order(x$up_start),]
+    x<-x[order(x$start1),]
     y<-y[order(y$start),]
     len_1<-nrow(x)-1
     len_2<-nrow(y)-1
@@ -54,27 +54,29 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
         }
         pb$tick()
     }
-    
-    #result<-delete_duplicate_factor(result)
-    result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id))))
-    result <- type.convert(result, as.is = TRUE)
+    if(is_strain == TRUE){
+        result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id))))
+        result <- type.convert(result, as.is = TRUE)
+        #result <- delete_duplicate(result)
+    }
     return(result)
 }
 
-reverse_negative_strand<-function(x){
-    if(x["up_strand"] == "-"){
-        swap(x["up_start"],x["up_end"])
+reverse_negative_strand<-function(x, up_start, up_end, down_start, down_end,
+                                  up_strand, down_strand){
+    if(x[up_strand] == "-"){
+        swap(x[up_start],x[up_end])
     }
-    else if(x["down_strand"] == "-"){
-        swap(x["down_start"],x["down_end"])
+    else if(x[down_strand] == "-"){
+        swap(x[down_start],x[down_end])
     }
     return(x)
 }
 
 reverse_uptag_neg<-function(x){
-    if(x["up_strand"] == "-"){
-        swap(x["up_start"],x["down_start"])
-        swap(x["up_end"],x["down_end"])
+    if(x["strand1"] == "-"){
+        swap(x["start1"],x["start2"])
+        swap(x["end1"],x["end2"])
     }
     return(x)
 }
@@ -88,10 +90,25 @@ modify_id<-function(x){
 }
 
 
-i<-1
-while(i<nrow(overlap_strand_gs)){
-    if(overlap_strand_gs[i,1]==overlap_strand_gs[i,2])
-        overlap_strand_gs<-overlap_strand_gs[-i,]
-    i<-i+1
+delete_duplicate<-function(x){
+    i<-1
+    while(i<nrow(x)){
+        if(x[i,1]==x[i,2]){
+            x<-x[-i,]
+            next
+        }
+        j<-1
+        while(j<nrow(x)){
+            test1<-x[i,]
+            test2<-x[j,]
+            if(x[i,1]==x[j,1] & i!=j & x[i,2]==x[j,2]){
+                x<-x[-j,]
+                next
+            }
+            j<-j+1
+        }
+        i<-i+1
+    }
+    return(x)
 }
 
