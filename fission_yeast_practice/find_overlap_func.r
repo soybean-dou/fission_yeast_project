@@ -58,6 +58,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
     #result<-delete_duplicate_factor(result)
     result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id))))
     result <- type.convert(result, as.is = TRUE)
+    result<-delete_duplicate(result)
     return(result)
 }
 
@@ -71,13 +72,13 @@ reverse_negative_strand<-function(x){
     return(x)
 }
 
-reverse_uptag_neg<-function(x){
-    if(x["up_strand"] == "-"){
-        swap(x["up_start"],x["down_start"])
-        swap(x["up_end"],x["down_end"])
-    }
-    return(x)
-}
+# reverse_uptag_neg<-function(x){
+#     if(x["up_strand"] == "-"){
+#         swap(x["up_start"],x["down_start"])
+#         swap(x["up_end"],x["down_end"])
+#     }
+#     return(x)
+# }
 
 modify_id<-function(x){
     id<-unlist(strsplit(x[2], ":"))[1]
@@ -88,10 +89,21 @@ modify_id<-function(x){
 }
 
 
-i<-1
-while(i<nrow(overlap_strand_gs)){
-    if(overlap_strand_gs[i,1]==overlap_strand_gs[i,2])
-        overlap_strand_gs<-overlap_strand_gs[-i,]
-    i<-i+1
+delete_duplicate<-function(x){
+    i<-1
+    while(i<nrow(x)){
+        if(x[i,1]==x[i,2]){
+            x<-x[-i,]
+        }
+        # j<-1
+        # while(j<=nrow(overlap_strand_gs2)){
+        #     if(j==i){ j<-j+1; next; }
+        #     if(overlap_strand_gs2[i,1] == overlap_strand_gs2[j,1]){
+        #         overlap_strand_gs2<-overlap_strand_gs2[-j,]
+        #     }
+        #     j<-j+1
+        # }
+        i<-i+1
+    }
+    return(x)
 }
-

@@ -1,12 +1,12 @@
 ##fission yeast overlapping gene data
 ##2020-11-12
 
-install.packages("ape")
-install.packages("stringr")
-install.packages("writexl")
-install.packages("progress")
-install.packages("dplyr")
-install.packages("seqinr")
+# install.packages("ape")
+# install.packages("stringr")
+# install.packages("writexl")
+# install.packages("progress")
+# install.packages("dplyr")
+# install.packages("seqinr")
 
 library(ape)
 library(stringr)
@@ -120,27 +120,18 @@ GS_ch3<-(as.data.frame
                                 1,reverse_negative_strand)))))
 GS_ch3 <- type.convert(GS_ch3, as.is = TRUE)
 
-overlap_strand_gs1<-find_overlapping_gene(GS_ch1,CDS_ch1,y_start_name = "up_start", y_end_name = "down_end")
-overlap_strand_gs2<-find_overlapping_gene(GS_ch2,CDS_ch2,
-                                          x_start_name = "up_start", x_end_name = "down_end", is_strain = TRUE)
+overlap_strand_gs1<-find_overlapping_gene(GS_ch1,CDS_ch1,x_start_name = "up_start", 
+                                          x_end_name = "down_end", is_strain = TRUE)
+
+overlap_strand_gs1<-delete_duplicate(overlap_strand_gs1)
+
+overlap_strand_gs2<-find_overlapping_gene(GS_ch2,CDS_ch2, x_start_name = "up_start", 
+                                          x_end_name = "down_end", is_strain = TRUE)
+
 overlap_strand_gs3<-find_overlapping_gene(GS_ch3,CDS_ch3)
 
 
-i<-1
-while(i<nrow(overlap_strand_gs2)){
-    if(overlap_strand_gs2[i,1]==overlap_strand_gs2[i,2])
-        overlap_strand_gs2<-overlap_strand_gs2[-i,]
-    j<-1
-    while(j<=nrow(overlap_strand_gs2)){
-        if(j==i){ j<-j+1; next; }
-        if(overlap_strand_gs2[i,1] == overlap_strand_gs2[j,1]){
-            overlap_strand_gs2<-overlap_strand_gs2[-j,]
-        }
-        j<-j+1
-    }
-    i<-i+1
-    
-}
+
 
 
 
