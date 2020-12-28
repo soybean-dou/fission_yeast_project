@@ -73,6 +73,7 @@ reverse_negative_strand<-function(x, up_start, up_end, down_start, down_end,
     return(x)
 }
 
+
 reverse_uptag_neg<-function(x){
     if(x["strand1"] == "-"){
         swap(x["start1"],x["start2"])
@@ -111,4 +112,3 @@ delete_duplicate<-function(x){
     }
     return(x)
 }
-

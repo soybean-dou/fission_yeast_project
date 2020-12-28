@@ -1,12 +1,12 @@
 ##fission yeast overlapping gene data
 ##2020-11-12
 
-install.packages("ape")
-install.packages("stringr")
-install.packages("writexl")
-install.packages("progress")
-install.packages("dplyr")
-install.packages("seqinr")
+# install.packages("ape")
+# install.packages("stringr")
+# install.packages("writexl")
+# install.packages("progress")
+# install.packages("dplyr")
+# install.packages("seqinr")
 
 library(ape)
 library(stringr)
@@ -148,7 +148,6 @@ overlap_strand_gs3<-find_overlapping_gene(GS_ch3,CDS_site$CDS_ch3,
 
 GS<-mget(ls(pattern = "GS_"))
 GS_overlap<-mget(ls(pattern = "overlap_strand_gs"))
-
 write_xlsx(overlap_strand_gs1,"GS_overlap_1.xlsx")
 
 for(i in 1:3){
