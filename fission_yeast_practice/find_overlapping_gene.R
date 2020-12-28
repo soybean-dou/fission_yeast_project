@@ -118,25 +118,32 @@ GS_ch1<-type.convert((as.data.frame(t(as.data.frame(
                           up_strand="strand1", down_strand="strand2"))))), 
                     as.is = TRUE)
 
-GS_ch2 <- type.convert((as.data.frame
-                        (t(as.data.frame(apply(subset(GSprimer, u_ch == "II"),
-                                               1,reverse_negative_strand))))), as.is = TRUE)
+GS_ch2<-type.convert((as.data.frame(t(as.data.frame(
+    apply(subset(GSprimer, chr1 == "II"), 
+          1,reverse_negative_strand,
+          up_start="start1", up_end="end1", 
+          down_start="start2", down_end="end2",
+          up_strand="strand1", down_strand="strand2"))))), 
+    as.is = TRUE)
 
-GS_ch3 <- type.convert((as.data.frame
-                        (t(as.data.frame(apply(subset(GSprimer, u_ch == "III"), 
-                                               1,reverse_negative_strand))))), as.is = TRUE)
+GS_ch3<-type.convert((as.data.frame(t(as.data.frame(
+    apply(subset(GSprimer, chr1 == "III"), 
+          1,reverse_negative_strand,
+          up_start="start1", up_end="end1", 
+          down_start="start2", down_end="end2",
+          up_strand="strand1", down_strand="strand2"))))), 
+    as.is = TRUE)
 
 overlap_strand_gs1<-find_overlapping_gene(GS_ch1,CDS_site$CDS_ch1,
-                                          x_start_name = "start1", x_end_name = "end1", 
+                                          x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
 overlap_strand_gs2<-find_overlapping_gene(GS_ch2,CDS_site$CDS_ch2,
-                                          x_start_name = "up_start", x_end_name = "down_end", 
+                                          x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
-
 overlap_strand_gs3<-find_overlapping_gene(GS_ch3,CDS_site$CDS_ch3,
-                                          x_start_name = "up_start", x_end_name = "down_end", 
+                                          x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
 GS<-mget(ls(pattern = "GS_"))
@@ -174,7 +181,7 @@ B_ch3<-type.convert((as.data.frame(t(as.data.frame(
           up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
 
 overlap_strand_B1<-find_overlapping_gene(B_ch1,CDS_site$CDS_ch1,
-                                          x_start_name = "start1", x_end_name = "end1", 
+                                          x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
 

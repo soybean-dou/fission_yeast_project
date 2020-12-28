@@ -57,7 +57,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
     if(is_strain == TRUE){
         result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id))))
         result <- type.convert(result, as.is = TRUE)
-        #result <- delete_duplicate(result)
+        result <- delete_duplicate(result)
     }
     return(result)
 }
