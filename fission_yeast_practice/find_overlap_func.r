@@ -26,6 +26,9 @@ delete_duplicate_factor<-function(x){
 find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
                                 y_start_name='start', y_end_name='end',
                                 is_same=FALSE, is_strain=FALSE){
+    if(is_strain){
+        ID<-"ID"
+    }else{ ID <-"attributes" }
     if(is_strain==TRUE){
         x<-as.data.frame(t(as.data.frame(apply(x, 1,reverse_uptag_neg))))
         x <- type.convert(x, as.is = TRUE)
@@ -38,18 +41,21 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
     result<-data.frame()
     for(i in 1:len_1){
         for(j in 1:len_2){
+            if(i==71 && j==246){
+                print("reached")
+            }
             if(is_same==TRUE & i==j)
                 next;
             if(x[i,x_end_name]<y[j,y_start_name])
                 break;
             if((x[i,x_start_name]<=y[j,y_start_name])&(x[i,x_end_name]>=y[j,y_start_name])){
-                result<-rbind(result,cbind(x[i,'ID'],y[j,'attributes'],y[j,y_start_name]))
+                result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name]))
             }
             else if((x[i,x_start_name]<=y[j,y_end_name])&(x[i,x_end_name]>=y[j,y_end_name])){
-                result<-rbind(result,cbind(x[i,'ID'],y[j,'attributes'],y[j,y_start_name]))
+                result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name]))
             }
             else if((x[i,x_start_name]>y[j,y_start_name])&(x[i,x_end_name]<y[j,y_end_name])){
-                result<-rbind(result,cbind(x[i,'ID'],y[j,'attributes'],y[j,y_start_name]))
+                result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name]))
             }
         }
         pb$tick()

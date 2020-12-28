@@ -92,21 +92,10 @@ utr3_overlap<-mget(ls(pattern = "overlap_tUTR_"))
 
 
 ###########------save data-----###############
-write_xlsx(overlap_cds_ch1,"over_cds_ch1.xlsx")
-write_xlsx(overlap_cds_ch2,"over_cds_ch2.xlsx")
-write_xlsx(overlap_cds_ch3,"over_cds_ch3.xlsx")
-write_xlsx(overlap_cds_mit,"over_cds_mit.xlsx")
-
-write_xlsx(overlap_fUTR_ch1,"over_5utr_ch1.xlsx")
-write_xlsx(overlap_fUTR_ch2,"over_5utr_ch2.xlsx")
-write_xlsx(overlap_fUTR_ch3,"over_5utr_ch3.xlsx")
-write_xlsx(overlap_fUTR_mit,"over_5utr_mit.xlsx")
-
-write_xlsx(overlap_tUTR_ch1,"over_3utr_ch1.xlsx")
-write_xlsx(overlap_tUTR_ch2,"over_3utr_ch2.xlsx")
-write_xlsx(overlap_tUTR_ch3,"over_3utr_ch3.xlsx")
-write_xlsx(overlap_tUTR_mit,"over_3utr_mit.xlsx")
-###########------save data-----###############
+for(i in 1:3){
+    file_name <- paste0("CDS_overlap_", toString(i),".xlsx")
+    write_xlsx(CDS_overlap[i],file_name)
+}
 
 ###########------GS primer data overlap site finding code-----###############
 
@@ -156,7 +145,7 @@ for(i in 1:3){
 }
 ###########------block PCR data overlap site finding code-----###############
 
-#prepare data : negative strand modification
+#--prepare data : negative strand modification
 
 B_ch1<-type.convert((as.data.frame(t(as.data.frame(
         apply(subset(Bprimer, chr1 == "I"), 
@@ -179,6 +168,7 @@ B_ch3<-type.convert((as.data.frame(t(as.data.frame(
           down_start="start2", down_end="end2",
           up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
 
+#--finding overlapping site
 overlap_strand_B1<-find_overlapping_gene(B_ch1,CDS_site$CDS_ch1,
                                           x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
