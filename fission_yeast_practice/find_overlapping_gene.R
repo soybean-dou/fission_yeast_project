@@ -19,7 +19,7 @@ source('find_overlap_func.r')
 
 #----------------------fission yeast data--------------------------
 gene_data<-read.gff("Schizosaccharomyces_pombe_all_chromosomes.gff3")
-GSprimer<-read.table("GSprimerPos.tsv", sep = "\t")
+GSprimer<-read.table("GSPrimerPos.tsv", sep = "\t")
 Bprimer<-read.table("bPrimerPos2.tsv", sep = "\t")
 SERIALprimer<-read.table("serialPrimerPos2.tsv")
 
@@ -150,9 +150,9 @@ for(i in 1:3){
 B_ch1<-type.convert((as.data.frame(t(as.data.frame(
         apply(subset(Bprimer, chr1 == "I"), 
                 1,reverse_negative_strand,
-                up_start="start1", up_end="end1", 
-                down_start="start2", down_end="end2",
-                up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
+                up_start="start3", up_end="end3", 
+                down_start="start4", down_end="end4",
+                up_strand="strand3", down_strand="strand4"))))), as.is = TRUE)
 
 B_ch2<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(Bprimer, chr1 == "II"), 
@@ -170,7 +170,7 @@ B_ch3<-type.convert((as.data.frame(t(as.data.frame(
 
 #--finding overlapping site
 overlap_strand_B1<-find_overlapping_gene(B_ch1,CDS_site$CDS_ch1,
-                                          x_start_name = "start1", x_end_name = "end2", 
+                                          x_start_name = "start3", x_end_name = "end4", 
                                           is_strain = TRUE)
 
 
