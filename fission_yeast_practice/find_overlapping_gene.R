@@ -150,7 +150,7 @@ for(i in 1:3){
 B_ch1<-type.convert((as.data.frame(t(as.data.frame(
         apply(subset(Bprimer, chr1 == "I"), 
                 1,reverse_negative_strand,
-                up_start="start3", up_end="end3", 
+                up_start="start3", up_end="end4", 
                 down_start="start4", down_end="end4",
                 up_strand="strand3", down_strand="strand4"))))), as.is = TRUE)
 
@@ -173,5 +173,18 @@ overlap_strand_B1<-find_overlapping_gene(B_ch1,CDS_site$CDS_ch1,
                                           x_start_name = "start3", x_end_name = "end4", 
                                           is_strain = TRUE)
 
+overlap_strand_B2<-find_overlapping_gene(B_ch2,CDS_site$CDS_ch2,
+                                         x_start_name = "start3", x_end_name = "end4", 
+                                         is_strain = TRUE)
 
+overlap_strand_B3<-find_overlapping_gene(B_ch3,CDS_site$CDS_ch3,
+                                         x_start_name = "start3", x_end_name = "end4", 
+                                         is_strain = TRUE)
 
+Block<-mget(ls(pattern = "B_"))
+B_overlap<-mget(ls(pattern = "overlap_strand_B"))
+
+for(i in 1:3){
+    file_name <- paste0("B_overlap_", toString(i),".xlsx")
+    write_xlsx(B_overlap[i],file_name)
+}

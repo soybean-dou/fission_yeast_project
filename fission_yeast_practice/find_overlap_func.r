@@ -33,7 +33,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
         x<-as.data.frame(t(as.data.frame(apply(x, 1,reverse_uptag_neg))))
         x <- type.convert(x, as.is = TRUE)
     }
-    x<-x[order(x$start1),]
+    x<-x[order(x$start5),]
     y<-y[order(y$start),]
     len_1<-nrow(x)-1
     len_2<-nrow(y)-1
@@ -42,7 +42,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
     for(i in 1:len_1){
         for(j in 1:len_2){
             if(i==71 && j==246){
-                print("reached")
+                #print("reached")
             }
             if(is_same==TRUE & i==j)
                 next;
@@ -64,6 +64,9 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
         result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id))))
         result <- type.convert(result, as.is = TRUE)
         result <- delete_duplicate(result)
+    }else{
+        result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id,is_strain=F))))
+        result <- type.convert(result, as.is = TRUE)
     }
     return(result)
 }
@@ -88,7 +91,13 @@ reverse_uptag_neg<-function(x){
     return(x)
 }
 
-modify_id<-function(x){
+modify_id<-function(x,is_strain=T){
+    if(is_strain==F){
+        id<-unlist(strsplit(x[1], ":"))[1]
+        id_split<-unlist(strsplit(id,".",fixed = TRUE))
+        result<-paste(id_split[1],id_split[2],sep = ".")
+        x[1]<-gsub("ID=", "", result)
+    }
     id<-unlist(strsplit(x[2], ":"))[1]
     id_split<-unlist(strsplit(id,".",fixed = TRUE))
     result<-paste(id_split[1],id_split[2],sep = ".")
