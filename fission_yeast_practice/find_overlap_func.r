@@ -33,7 +33,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
         x<-as.data.frame(t(as.data.frame(apply(x, 1,reverse_uptag_neg))))
         x <- type.convert(x, as.is = TRUE)
     }
-    x<-x[order(x$start5),]
+    x<-x[order(x$start1),]
     y<-y[order(y$start),]
     len_1<-nrow(x)-1
     len_2<-nrow(y)-1
@@ -108,13 +108,13 @@ modify_id<-function(x,is_strain=T){
 
 delete_duplicate<-function(x){
     i<-1
-    while(i<nrow(x)){
+    while(i<nrow(x)+1){
         if(x[i,1]==x[i,2]){
             x<-x[-i,]
             next
         }
         j<-1
-        while(j<nrow(x)){
+        while(j<nrow(x)+1){
             test1<-x[i,]
             test2<-x[j,]
             if(x[i,1]==x[j,1] & i!=j & x[i,2]==x[j,2]){
