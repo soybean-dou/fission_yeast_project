@@ -233,3 +233,11 @@ overlap_strand_S2<-find_overlapping_gene(S_ch2,CDS_site$CDS_ch2,
 overlap_strand_S3<-find_overlapping_gene(S_ch3,CDS_site$CDS_ch3,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
+
+Serial<-mget(ls(pattern = "S_"))
+S_overlap<-mget(ls(pattern = "overlap_strand_S"))
+
+for(i in 1:3){
+    file_name <- paste0("S_overlap_", toString(i),".xlsx")
+    write_xlsx(S_overlap[i],file_name)
+}
