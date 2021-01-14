@@ -70,7 +70,7 @@ barplot(ch3_overlap_info, names=c("convergent","divergent","3-tendom", "5-tendom
 overlap_type_data<-data.frame(chromosome1 = ch1_overlap_info, chromosome2=ch2_overlap_info, chromosome3=ch3_overlap_info)
 overlap_type_data
 
-layout(matrix(c(1,1,2), 1,3))
+layout(matrix(c(1,1,1,2,2), 1,5))
 layout.show(2)
 
 barplot(as.matrix(overlap_type_data), beside=T, col=coul, names.arg = c(1,2,3),
