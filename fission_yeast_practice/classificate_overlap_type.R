@@ -48,7 +48,7 @@ ch2_overlap_info<-c(nrow(ch2_overlap_type[[1]]),nrow(ch2_overlap_type[[2]]),
 ch3_overlap_info<-c(nrow(ch3_overlap_type[[1]]),nrow(ch3_overlap_type[[2]]),
                     nrow(ch3_overlap_type[[3]]),nrow(ch3_overlap_type[[4]]))
 
-coul <- brewer.pal(5, "Set2") 
+coul <- brewer.pal(4, "Set2") 
 barplot(ch1_overlap_info, names=c("convergent","divergent","3-tendom", "5-tendom"), 
         col=coul, border=F, 
         xlab="overlapping type", 
@@ -67,5 +67,25 @@ barplot(ch3_overlap_info, names=c("convergent","divergent","3-tendom", "5-tendom
         ylab="number of gene", 
         main="Overlapping gene type of chromosome 3", ylim=c(0,170))
 #-----------------------------------------------------------------------------------------
+overlap_type_data<-data.frame(chromosome1 = ch1_overlap_info, chromosome2=ch2_overlap_info, chromosome3=ch3_overlap_info)
+overlap_type_data
+
+layout(matrix(c(1,1,2), 1,3))
+layout.show(2)
+
+barplot(as.matrix(overlap_type_data), beside=T, col=coul, names.arg = c(1,2,3),
+        xlab="overlapping type", 
+        ylab="choromosome", 
+        main="Overlapping gene type of S.pombe", ylim=c(0,400))
+legend("topright",c("convergent","divergent","3-tendom", "5-tendom"), fill=coul)
+
+barplot(as.matrix(overlap_type_data), col=coul, horiz = F,
+        names.arg = c(1,2,3),
+        xlab="choromosome", 
+        ylab="number of gene", 
+        ylim=c(0,800),
+        main="Overlapping gene type of S.pombe\n(merged)", width = 60, space = 0.7)
+legend("topright",c("convergent","divergent","3-tendom", "5-tendom"), fill=coul,cex = 0.75)
+
 
 
