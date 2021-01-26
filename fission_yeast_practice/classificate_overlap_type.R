@@ -52,7 +52,7 @@ barplot(ch1_overlap_info, names=c("convergent","divergent","3-tendom", "5-tendom
         ylab="number of gene", 
         main="Overlapping gene type of chromosome 1", ylim=c(0,420))
 
-barplot(ch2_overlap_info, names=c("convergent","divergent","3-tendom", "5-tendom"), 
+barplot(ch2_overlap_info, names=c("convergent","divergent","3-tandom", "5-tendom"), 
         col=coul, border=F, 
         xlab="overlapping type", 
         ylab="number of gene", 
@@ -71,10 +71,10 @@ layout(matrix(c(1,1,1,2,2), 1,5))
 layout.show(2)
 
 barplot(as.matrix(overlap_type_data), beside=T, col=coul, names.arg = c(1,2,3),
-        xlab="overlapping type", 
-        ylab="choromosome", 
+        xlab="choromosome", 
+        ylab="number of gene", 
         main="Overlapping gene type of S.pombe", ylim=c(0,400))
-legend("topright",c("convergent","divergent","3-tendom", "5-tendom"), fill=coul)
+legend("topright",c("convergent","divergent","3-tandem", "5-tandem"), fill=coul)
 
 barplot(as.matrix(overlap_type_data), col=coul, horiz = F,
         names.arg = c(1,2,3),
@@ -82,7 +82,7 @@ barplot(as.matrix(overlap_type_data), col=coul, horiz = F,
         ylab="number of gene", 
         ylim=c(0,800),
         main="Overlapping gene type of S.pombe\n(merged)", width = 60, space = 0.7)
-legend("topright",c("convergent","divergent","3-tendom", "5-tendom"), fill=coul,cex = 0.75)
+legend("topright",c("convergent","divergent","3-tandem", "5-tandem"), fill=coul,cex = 0.75)
 
 
 

@@ -33,7 +33,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
         x<-as.data.frame(t(as.data.frame(apply(x, 1,reverse_uptag_neg))))
         x <- type.convert(x, as.is = TRUE)
     }
-    x<-x[order(x$start),]
+    x<-x[order(x$start1),]
     y<-y[order(y$start),]
     len_1<-nrow(x)-1
     len_2<-nrow(y)-1
@@ -134,3 +134,5 @@ delete_duplicate<-function(x){
     }
     return(x)
 }
+
+

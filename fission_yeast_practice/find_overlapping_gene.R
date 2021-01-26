@@ -14,6 +14,7 @@ library(dplyr)
 library(writexl)
 library(progress)
 library(seqinr)
+library(RColorBrewer)
 source('find_overlap_func.r')
 
 
@@ -234,10 +235,92 @@ overlap_strand_S3<-find_overlapping_gene(S_ch3,CDS_site$CDS_ch3,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
 
-Serial<-mget(ls(pattern = "S_"))
+Serial<-mget(ls(pattern = "^S_ch"))
 S_overlap<-mget(ls(pattern = "overlap_strand_S"))
 
 for(i in 1:3){
     file_name <- paste0("S_overlap_", toString(i),".xlsx")
     write_xlsx(S_overlap[i],file_name)
 }
+
+overlap_strand_data<-c(nrow(GS_overlap[[1]])+nrow(B_overlap[[1]])+nrow(S_overlap[[1]]),
+                            nrow(GS_overlap[[2]])+nrow(B_overlap[[2]])+nrow(S_overlap[[2]]),
+                            nrow(GS_overlap[[3]])+nrow(B_overlap[[3]])+nrow(S_overlap[[3]]))
+
+overlap_strand_data<-as.data.frame(overlap_strand_data)
+overlap_strand_data
+
+layout(matrix(c(1,2),1,2))
+layout.show(1)
+
+coul <- brewer.pal(3, "Set1") 
+barplot(overlap_strand_data, names.arg = c("1","2","3"),
+        col=coul, border=F, 
+        xlab="chromosome", 
+        ylab="number of overlapping site", 
+        ylim=c(0,80),
+        width = 0.8, space=0.8,
+        main="Overlap between deletion model and CDS")
+
+overlap_strand_data_mg<-data.frame(chromosome1=c(overlap_strand_data[1], nrow(GS_overlap[[1]]),nrow(B_overlap[[1]]),nrow(S_overlap[[1]])), 
+           chromosome2=c(overlap_strand_data[2], nrow(GS_overlap[[2]]),nrow(B_overlap[[2]]),nrow(S_overlap[[2]])),
+           chromosome3=c(overlap_strand_data[3],nrow(GS_overlap[[3]]),nrow(B_overlap[[3]]),nrow(S_overlap[[3]])))
+overlap_strand_data_mg
+
+
+
+coul <- brewer.pal(4, "Set1") 
+barplot(as.matrix(overlap_strand_data_mg), beside=T,names.arg = c("1","2","3"),
+        col=coul, 
+        xlab="chromosome", 
+        ylab="number of overlapping site", ylim=c(0,90),
+        main="Overlap between \ndeletion model and CDS")
+legend("topright",c("all","GS","Block","SERIAL"), fill=coul,cex = 0.75)
+
+#-------------------------------------
+library(VennDiagram)
+
+
+
+#--------------------------------------
+overlap_matrix_ch1<-data.matrix(overlap_matrix$overlap_matrix_ch1)
+overlap_heatmap <- heatmap(overlap_matrix_ch1, Rowv=NA, Colv=NA, col=brewer.pal(9, "Blues"), scale="row", margin=c(5,10))
+
+
+#--------------------------------------
+overlap_strand_gs1_UTR<-find_overlapping_gene(GS$GS_ch1, five_UTR$five_UTR_ch1,
+                                          x_start_name = "start1", x_end_name = "end2", 
+                                          is_strain = TRUE)
+
+overlap_strand_gs2_UTR<-find_overlapping_gene(GS$GS_ch2,five_UTR$five_UTR_ch2,
+                                          x_start_name = "start1", x_end_name = "end2", 
+                                          is_strain = TRUE)
+
+overlap_strand_gs3_UTR<-find_overlapping_gene(GS$GS_ch3,five_UTR$five_UTR_ch3,
+                                          x_start_name = "start1", x_end_name = "end2", 
+                                          is_strain = TRUE)
+
+overlap_strand_B1_UTR<-find_overlapping_gene(Block$B_ch1,five_UTR$five_UTR_ch1,
+                                         x_start_name = "start3", x_end_name = "end4", 
+                                         is_strain = TRUE)
+
+overlap_strand_B2_UTR<-find_overlapping_gene(Block$B_ch2,five_UTR$five_UTR_ch2,
+                                         x_start_name = "start3", x_end_name = "end4", 
+                                         is_strain = TRUE)
+
+overlap_strand_B3_UTR<-find_overlapping_gene(Block$B_ch3,five_UTR$five_UTR_ch3,
+                                         x_start_name = "start3", x_end_name = "end4", 
+                                         is_strain = TRUE)
+
+overlap_strand_S1_UTR<-find_overlapping_gene(Serial$S_ch1,five_UTR$five_UTR_ch1,
+                                         x_start_name = "start1", x_end_name = "end2", 
+                                         is_strain = TRUE)
+
+overlap_strand_S2_UTR<-find_overlapping_gene(Serial$S_ch2,five_UTR$five_UTR_ch2,
+                                         x_start_name = "start1", x_end_name = "end2", 
+                                         is_strain = TRUE)
+
+overlap_strand_S3_UTR<-find_overlapping_gene(Serial$S_ch3,five_UTR$five_UTR_ch3,
+                                         x_start_name = "start1", x_end_name = "end2", 
+                                         is_strain = TRUE)
+
