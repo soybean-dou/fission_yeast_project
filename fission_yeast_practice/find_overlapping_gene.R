@@ -288,39 +288,86 @@ overlap_heatmap <- heatmap(overlap_matrix_ch1, Rowv=NA, Colv=NA, col=brewer.pal(
 
 
 #--------------------------------------
-overlap_strand_gs1_UTR<-find_overlapping_gene(GS$GS_ch1, five_UTR$five_UTR_ch1,
+overlap_strand_UTR_gs1<-find_overlapping_gene(GS$GS_ch1, five_UTR$five_UTR_ch1,
                                           x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
-overlap_strand_gs2_UTR<-find_overlapping_gene(GS$GS_ch2,five_UTR$five_UTR_ch2,
+overlap_strand_UTR_gs2<-find_overlapping_gene(GS$GS_ch2,five_UTR$five_UTR_ch2,
                                           x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
-overlap_strand_gs3_UTR<-find_overlapping_gene(GS$GS_ch3,five_UTR$five_UTR_ch3,
+overlap_strand_UTR_gs3<-find_overlapping_gene(GS$GS_ch3,five_UTR$five_UTR_ch3,
                                           x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
-overlap_strand_B1_UTR<-find_overlapping_gene(Block$B_ch1,five_UTR$five_UTR_ch1,
+overlap_strand_UTR_B1<-find_overlapping_gene(Block$B_ch1,five_UTR$five_UTR_ch1,
                                          x_start_name = "start3", x_end_name = "end4", 
                                          is_strain = TRUE)
 
-overlap_strand_B2_UTR<-find_overlapping_gene(Block$B_ch2,five_UTR$five_UTR_ch2,
+overlap_strand_UTR_B2<-find_overlapping_gene(Block$B_ch2,five_UTR$five_UTR_ch2,
                                          x_start_name = "start3", x_end_name = "end4", 
                                          is_strain = TRUE)
 
-overlap_strand_B3_UTR<-find_overlapping_gene(Block$B_ch3,five_UTR$five_UTR_ch3,
+overlap_strand_UTR_B3<-find_overlapping_gene(Block$B_ch3,five_UTR$five_UTR_ch3,
                                          x_start_name = "start3", x_end_name = "end4", 
                                          is_strain = TRUE)
 
-overlap_strand_S1_UTR<-find_overlapping_gene(Serial$S_ch1,five_UTR$five_UTR_ch1,
+overlap_strand_UTR_S1<-find_overlapping_gene(Serial$S_ch1,five_UTR$five_UTR_ch1,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
 
-overlap_strand_S2_UTR<-find_overlapping_gene(Serial$S_ch2,five_UTR$five_UTR_ch2,
+overlap_strand_UTR_S2<-find_overlapping_gene(Serial$S_ch2,five_UTR$five_UTR_ch2,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
 
-overlap_strand_S3_UTR<-find_overlapping_gene(Serial$S_ch3,five_UTR$five_UTR_ch3,
+overlap_strand_UTR_S3<-find_overlapping_gene(Serial$S_ch3,five_UTR$five_UTR_ch3,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
+#----------------
+overlap_strand_UTR<-mget(ls(pattern = "overlap_strand_UTR"))
+overlap_strand_UTR_ch1<-rbind(overlap_strand_UTR_B1,overlap_strand_UTR_gs1,overlap_strand_UTR_S1)
+overlap_strand_UTR_ch2<-rbind(overlap_strand_UTR_B2,overlap_strand_UTR_gs2,overlap_strand_UTR_S2)
+overlap_strand_UTR_ch3<-rbind(overlap_strand_UTR_B3,overlap_strand_UTR_gs3,overlap_strand_UTR_S3)
+overlap_strand_UTR_all<-rbind(overlap_strand_UTR_ch1,overlap_strand_UTR_ch2,overlap_strand_UTR_ch3)
 
+
+#--------------------------------------
+overlap_strand_UTR_gs1<-find_overlapping_gene(GS$GS_ch1, three_UTR$three_UTR_ch1,
+                                              x_start_name = "start1", x_end_name = "end2", 
+                                              is_strain = TRUE)
+
+overlap_strand_UTR_gs2<-find_overlapping_gene(GS$GS_ch2,three_UTR$three_UTR_ch2,
+                                              x_start_name = "start1", x_end_name = "end2", 
+                                              is_strain = TRUE)
+
+overlap_strand_UTR_gs3<-find_overlapping_gene(GS$GS_ch3,three_UTR$three_UTR_ch3,
+                                              x_start_name = "start1", x_end_name = "end2", 
+                                              is_strain = TRUE)
+
+overlap_strand_UTR_B1<-find_overlapping_gene(Block$B_ch1,three_UTR$three_UTR_ch1,
+                                             x_start_name = "start3", x_end_name = "end4", 
+                                             is_strain = TRUE)
+
+overlap_strand_UTR_B2<-find_overlapping_gene(Block$B_ch2,three_UTR$three_UTR_ch2,
+                                             x_start_name = "start3", x_end_name = "end4", 
+                                             is_strain = TRUE)
+
+overlap_strand_UTR_B3<-find_overlapping_gene(Block$B_ch3,three_UTR$three_UTR_ch3,
+                                             x_start_name = "start3", x_end_name = "end4", 
+                                             is_strain = TRUE)
+
+overlap_strand_UTR_S1<-find_overlapping_gene(Serial$S_ch1,three_UTR$three_UTR_ch1,
+                                             x_start_name = "start1", x_end_name = "end2", 
+                                             is_strain = TRUE)
+
+overlap_strand_UTR_S2<-find_overlapping_gene(Serial$S_ch2,three_UTR$three_UTR_ch2,
+                                             x_start_name = "start1", x_end_name = "end2", 
+                                             is_strain = TRUE)
+
+overlap_strand_UTR_S3<-find_overlapping_gene(Serial$S_ch3,three_UTR$three_UTR_ch3,
+                                             x_start_name = "start1", x_end_name = "end2", 
+                                             is_strain = TRUE)
+#----------------
+overlap_strand_3UTR<-rbind(overlap_strand_UTR_B1,overlap_strand_UTR_gs1,overlap_strand_UTR_S1,
+                           overlap_strand_UTR_B2,overlap_strand_UTR_gs2,overlap_strand_UTR_S2,
+                           overlap_strand_UTR_B3,overlap_strand_UTR_gs3,overlap_strand_UTR_S3)

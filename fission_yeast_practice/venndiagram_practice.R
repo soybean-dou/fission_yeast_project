@@ -25,3 +25,26 @@ x <- list(
 )
 
 ggVennDiagram(x, label_alpha = 0)
+
+cds_sample<-read.csv("DATA/cds_data.csv")
+utr_sample<-read.csv("DATA/utr_data.csv")
+overlap_cds_data<-read.csv("DATA/overlap_cds_data(1).csv")
+
+x<-list(
+    current = overlap_cds_data[,1],
+    before = cds_sample[,1]
+)
+ggVennDiagram(x, label_alpha = 0)
+
+
+x<-list(
+    current = overlap_strand_UTR_all[,1],
+    before = utr_sample[,1]
+)
+ggVennDiagram(x, label_alpha = 0)
+
+x<-list(
+    current = overlap_strand_3UTR[,1],
+    before = utr_sample[,1]
+)
+ggVennDiagram(x, label_alpha = 0)
