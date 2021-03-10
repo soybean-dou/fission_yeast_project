@@ -20,6 +20,10 @@ source('find_overlap_func.r')
 
 #----------------------fission yeast data--------------------------
 gene_data<-read.gff("Schizosaccharomyces_pombe_all_chromosomes.gff3")
+
+CDS<-read.table("DATA/chromosome1.cds.coords.tsv")
+colnames(CDS)<-c("ID","start","end","strand")
+
 GSprimer<-read.table("GSPrimerPos.tsv", sep = "\t")
 Bprimer<-read.table("bPrimerPos2.tsv", sep = "\t")
 SERIALprimer<-read.table("serialPrimerPos2.tsv")
@@ -67,40 +71,39 @@ overlap_cds_ch2<-find_overlapping_gene(CDS_ch2,CDS_ch2,is_same = TRUE)
 overlap_cds_ch3<-find_overlapping_gene(CDS_ch3,CDS_ch3,is_same = TRUE)
 overlap_cds_mit<-find_overlapping_gene(CDS_mit,CDS_mit,is_same = TRUE)
 
-CDS_site<-mget(ls(pattern = "CDS_"))
+CDS<-mget(ls(pattern = "CDS_"))
 CDS_overlap<-mget(ls(pattern = "overlap_cds_"))
 
 #-------------------------------------------------------------
 #--------------find CDS-UTR overlapping site-----------------
 
-five_UTR_ch1<-subset(gene_data, seqid == "I" & type =="five_prime_UTR")
-five_UTR_ch2<-subset(gene_data, seqid == "II" & type =="five_prime_UTR")
-five_UTR_ch3<-subset(gene_data, seqid == "III" & type =="five_prime_UTR")
-five_UTR_mit<-subset(gene_data, seqid == "mitochondrial" & type =="five_prime_UTR")
+ch1<-subset(gene_data, seqid == "I" & type =="five_prime_UTR")
+ch2<-subset(gene_data, seqid == "II" & type =="five_prime_UTR")
+ch3<-subset(gene_data, seqid == "III" & type =="five_prime_UTR")
+mit<-subset(gene_data, seqid == "mitochondrial" & type =="five_prime_UTR")
 
-three_UTR_ch1<-subset(gene_data, seqid == "I" & type =="three_prime_UTR")
-three_UTR_ch2<-subset(gene_data, seqid == "II" & type =="three_prime_UTR")
-three_UTR_ch3<-subset(gene_data, seqid == "III" & type =="three_prime_UTR")
-three_UTR_mit<-subset(gene_data, seqid == "mitochondrial" & type =="three_prime_UTR")
+five_UTR<-mget(ls(pattern = "ch"))
 
-five_UTR<-mget(ls(pattern = "five_UTR_"))
-three_UTR<-mget(ls(pattern = "three_UTR_"))
+ch1<-subset(gene_data, seqid == "I" & type =="three_prime_UTR")
+ch2<-subset(gene_data, seqid == "II" & type =="three_prime_UTR")
+ch3<-subset(gene_data, seqid == "III" & type =="three_prime_UTR")
+mit<-subset(gene_data, seqid == "mitochondrial" & type =="three_prime_UTR")
+
+three_UTR<-mget(ls(pattern = "ch"))
 
 overlap_fUTR_ch1<-find_overlapping_gene(CDS_ch1,five_UTR_ch1)
 overlap_fUTR_ch2<-find_overlapping_gene(CDS_ch2,five_UTR_ch2)
 overlap_fUTR_ch3<-find_overlapping_gene(CDS_ch3,five_UTR_ch3)
 overlap_fUTR_mit<-find_overlapping_gene(CDS_mit,five_UTR_mit)
 
+utr5_overlap<-mget(ls(pattern = "overlap_fUTR_"))
+
 overlap_tUTR_ch1<-find_overlapping_gene(CDS_ch1,three_UTR_ch1)
 overlap_tUTR_ch2<-find_overlapping_gene(CDS_ch2,three_UTR_ch2)
 overlap_tUTR_ch3<-find_overlapping_gene(CDS_ch3,three_UTR_ch3)
 overlap_tUTR_mit<-find_overlapping_gene(CDS_mit,three_UTR_mit)
 
-
-
-utr5_overlap<-mget(ls(pattern = "overlap_fUTR_"))
 utr3_overlap<-mget(ls(pattern = "overlap_tUTR_"))
-
 
 ###########------save data-----###############
 for(i in 1:3){
@@ -108,9 +111,9 @@ for(i in 1:3){
     write_xlsx(CDS_overlap[i],file_name)
 }
 
-###########------GS primer data overlap site finding code-----###############
+#--prepare data : primer data modification
 
-GS_ch1<-type.convert((as.data.frame(t(as.data.frame(
+ch1<-type.convert((as.data.frame(t(as.data.frame(
                     apply(subset(GSprimer, chr1 == "I"), 
                           1,reverse_negative_strand,
                           up_start="start1", up_end="end1", 
@@ -118,7 +121,7 @@ GS_ch1<-type.convert((as.data.frame(t(as.data.frame(
                           up_strand="strand1", down_strand="strand2"))))), 
                     as.is = TRUE)
 
-GS_ch2<-type.convert((as.data.frame(t(as.data.frame(
+ch2<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(GSprimer, chr1 == "II"), 
           1,reverse_negative_strand,
           up_start="start1", up_end="end1", 
@@ -126,7 +129,7 @@ GS_ch2<-type.convert((as.data.frame(t(as.data.frame(
           up_strand="strand1", down_strand="strand2"))))), 
     as.is = TRUE)
 
-GS_ch3<-type.convert((as.data.frame(t(as.data.frame(
+ch3<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(GSprimer, chr1 == "III"), 
           1,reverse_negative_strand,
           up_start="start1", up_end="end1", 
@@ -134,119 +137,104 @@ GS_ch3<-type.convert((as.data.frame(t(as.data.frame(
           up_strand="strand1", down_strand="strand2"))))), 
     as.is = TRUE)
 
-GS<-mget(ls(pattern = "GS_"))
+GS<-mget(ls(pattern = "ch"))
 
-overlap_strand_gs1<-find_overlapping_gene(GS$GS_ch1,CDS_site$CDS_ch1,
-                                          x_start_name = "start1", x_end_name = "end2", 
-                                          is_strain = TRUE)
-
-overlap_strand_gs2<-find_overlapping_gene(GS$GS_ch2,CDS_site$CDS_ch2,
-                                          x_start_name = "start1", x_end_name = "end2", 
-                                          is_strain = TRUE)
-
-overlap_strand_gs3<-find_overlapping_gene(GS$GS_ch3,CDS_site$CDS_ch3,
-                                          x_start_name = "start1", x_end_name = "end2", 
-                                          is_strain = TRUE)
-
-GS_overlap<-mget(ls(pattern = "overlap_strand_gs"))
+ch1<-type.convert((as.data.frame(t(as.data.frame(
+    apply(subset(Bprimer, chr1 == "I"), 
+          1,reverse_negative_strand,
+          up_start="start3", up_end="end3", 
+          down_start="start4", down_end="end4",
+          up_strand="strand3", down_strand="strand4"))))), as.is = TRUE)
 
 
-for(i in 1:3){
-    file_name <- paste0("GS_overlap_", toString(i),".xlsx")
-    write_xlsx(GS_overlap[i],file_name)
-}
-###########------block PCR data overlap site finding code-----###############
+ch1 <- na.omit(B_ch1)
 
-#--prepare data : negative strand modification
-
-B_ch1<-type.convert((as.data.frame(t(as.data.frame(
-        apply(subset(Bprimer, chr1 == "I"), 
-                1,reverse_negative_strand,
-                up_start="start5", up_end="end5", 
-                down_start="start6", down_end="end6",
-                up_strand="strand5", down_strand="strand6"))))), as.is = TRUE)
-
-
-B_ch1 <- na.omit(B_ch1)
-
-B_ch2<-type.convert((as.data.frame(t(as.data.frame(
+ch2<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(Bprimer, chr1 == "II"), 
           1,reverse_negative_strand,
-          up_start="start1", up_end="end1", 
-          down_start="start2", down_end="end2",
-          up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
+          up_start="start3", up_end="end3", 
+          down_start="start4", down_end="end4",
+          up_strand="strand3", down_strand="strand4"))))), as.is = TRUE)
 
-B_ch3<-type.convert((as.data.frame(t(as.data.frame(
+ch3<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(Bprimer, chr1 == "III"), 
           1,reverse_negative_strand,
-          up_start="start1", up_end="end1", 
-          down_start="start2", down_end="end2",
-          up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
+          up_start="start3", up_end="end4", 
+          down_start="start3", down_end="end4",
+          up_strand="strand3", down_strand="strand4"))))), as.is = TRUE)
 
-Block<-mget(ls(pattern = "B_"))
+Block<-mget(ls(pattern = "ch"))
 
-#--finding overlapping site
-overlap_strand_B1<-find_overlapping_gene(Block$B_ch1,CDS_site$CDS_ch1,
-                                          x_start_name = "start3", x_end_name = "end4", 
-                                          is_strain = TRUE)
-
-overlap_strand_B2<-find_overlapping_gene(Block$B_ch2,CDS_site$CDS_ch2,
-                                         x_start_name = "start3", x_end_name = "end4", 
-                                         is_strain = TRUE)
-
-overlap_strand_B3<-find_overlapping_gene(Block$B_ch3,CDS_site$CDS_ch3,
-                                         x_start_name = "start3", x_end_name = "end4", 
-                                         is_strain = TRUE)
-
-B_overlap<-mget(ls(pattern = "overlap_strand_B"))
-
-
-for(i in 1:3){
-    file_name <- paste0("B_overlap_", toString(i),".xlsx")
-    write_xlsx(B_overlap[i],file_name)
-}
-
-S_ch1<-type.convert((as.data.frame(t(as.data.frame(
+ch1<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(SERIALprimer, chr1 == "I"), 
           1,reverse_negative_strand,
           up_start="start1", up_end="end1", 
           down_start="start2", down_end="end2",
           up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
 
-S_ch2<-type.convert((as.data.frame(t(as.data.frame(
+ch2<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(SERIALprimer, chr1 == "II"), 
           1,reverse_negative_strand,
           up_start="start1", up_end="end1", 
           down_start="start2", down_end="end2",
           up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
 
-S_ch3<-type.convert((as.data.frame(t(as.data.frame(
+ch3<-type.convert((as.data.frame(t(as.data.frame(
     apply(subset(SERIALprimer, chr1 == "III"), 
           1,reverse_negative_strand,
           up_start="start1", up_end="end1", 
           down_start="start2", down_end="end2",
           up_strand="strand1", down_strand="strand2"))))), as.is = TRUE)
 
-Serial<-mget(ls(pattern = "^S_ch"))
+Serial<-mget(ls(pattern = "ch"))
 
-overlap_strand_S1<-find_overlapping_gene(Serial$S_ch1,CDS_site$CDS_ch1,
+
+###########------overlap site finding code-----###############
+
+ch1<-find_overlapping_gene(GS$ch1, CDS,
+                            x_start_name = "start1", x_end_name = "end2", 
+                            is_strain = TRUE)
+
+ch2<-find_overlapping_gene(GS$ch2,CDS$CDS_ch2,
+                            x_start_name = "start1", x_end_name = "end2", 
+                            is_strain = TRUE)
+
+ch3<-find_overlapping_gene(GS$ch3,CDS$CDS_ch3,
+                          x_start_name = "start1", x_end_name = "end2", 
+                          is_strain = TRUE)
+
+GS_CDS<-mget(ls(pattern = "ch1"))
+
+
+ch1<-find_overlapping_gene(Block$ch1,CDS,
+                            x_start_name = "start3", x_end_name = "end4", 
+                            is_strain = TRUE, b_primer=T)
+
+ch2<-find_overlapping_gene(Block$ch2,CDS$CDS_ch2,
+                            x_start_name = "start3", x_end_name = "end4", 
+                            is_strain = TRUE, b_primer=T)
+
+ch3<-find_overlapping_gene(Block$ch3,CDS$CDS_ch3,
+                            x_start_name = "start3", x_end_name = "end4", 
+                            is_strain = TRUE, b_primer=T)
+
+B_CDS<-mget(ls(pattern = "ch1"))
+
+
+ch1<-find_overlapping_gene(Serial$ch1,CDS$CDS_ch1,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
 
-overlap_strand_S2<-find_overlapping_gene(Serial$S_ch2,CDS_site$CDS_ch2,
+ch2<-find_overlapping_gene(Serial$ch2,CDS$CDS_ch2,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
 
-overlap_strand_S3<-find_overlapping_gene(Serial$S_ch3,CDS_site$CDS_ch3,
+ch3<-find_overlapping_gene(Serial$ch3,CDS$CDS_ch3,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
 
-S_overlap<-mget(ls(pattern = "overlap_strand_S"))
+S_CDS<-mget(ls(pattern = "ch1"))
 
-for(i in 1:3){
-    file_name <- paste0("S_overlap_", toString(i),".xlsx")
-    write_xlsx(S_overlap[i],file_name)
-}
 
 overlap_strand_data<-c(nrow(GS_overlap[[1]])+nrow(B_overlap[[1]])+nrow(S_overlap[[1]]),
                             nrow(GS_overlap[[2]])+nrow(B_overlap[[2]])+nrow(S_overlap[[2]]),
@@ -282,28 +270,25 @@ barplot(as.matrix(overlap_strand_data_mg), beside=T,names.arg = c("1","2","3"),
         main="Overlap between \ndeletion model and CDS")
 legend("topright",c("all","GS","Block","SERIAL"), fill=coul,cex = 0.75)
 
-#-------------------------------------
-library(VennDiagram)
-
-
-
 #--------------------------------------
 overlap_matrix_ch1<-data.matrix(overlap_matrix$overlap_matrix_ch1)
 overlap_heatmap <- heatmap(overlap_matrix_ch1, Rowv=NA, Colv=NA, col=brewer.pal(9, "Blues"), scale="row", margin=c(5,10))
 
 
 #--------------------------------------
-overlap_strand_UTR_gs1<-find_overlapping_gene(GS$GS_ch1, five_UTR$five_UTR_ch1,
+ch1<-find_overlapping_gene(GS$GS_ch1, five_UTR$five_UTR_ch1,
                                           x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
-overlap_strand_UTR_gs2<-find_overlapping_gene(GS$GS_ch2,five_UTR$five_UTR_ch2,
+ch2<-find_overlapping_gene(GS$GS_ch2,five_UTR$five_UTR_ch2,
                                           x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
 
-overlap_strand_UTR_gs3<-find_overlapping_gene(GS$GS_ch3,five_UTR$five_UTR_ch3,
+ch3<-find_overlapping_gene(GS$GS_ch3,five_UTR$five_UTR_ch3,
                                           x_start_name = "start1", x_end_name = "end2", 
                                           is_strain = TRUE)
+
+GS_5utr<-mget(ls(pattern = "overlap_starnd_UTR_gs"))
 
 overlap_strand_UTR_B1<-find_overlapping_gene(Block$B_ch1,five_UTR$five_UTR_ch1,
                                          x_start_name = "start3", x_end_name = "end4", 
@@ -317,6 +302,8 @@ overlap_strand_UTR_B3<-find_overlapping_gene(Block$B_ch3,five_UTR$five_UTR_ch3,
                                          x_start_name = "start3", x_end_name = "end4", 
                                          is_strain = TRUE)
 
+B_5utr<-mget(ls(pattern = "overlap_starnd_UTR_B"))
+
 overlap_strand_UTR_S1<-find_overlapping_gene(Serial$S_ch1,five_UTR$five_UTR_ch1,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
@@ -328,6 +315,8 @@ overlap_strand_UTR_S2<-find_overlapping_gene(Serial$S_ch2,five_UTR$five_UTR_ch2,
 overlap_strand_UTR_S3<-find_overlapping_gene(Serial$S_ch3,five_UTR$five_UTR_ch3,
                                          x_start_name = "start1", x_end_name = "end2", 
                                          is_strain = TRUE)
+
+S_5utr<-mget(ls(pattern = "overlap_starnd_UTR_S"))
 #----------------
 overlap_strand_UTR<-mget(ls(pattern = "overlap_strand_UTR"))
 overlap_strand_UTR_ch1<-rbind(overlap_strand_UTR_B1,overlap_strand_UTR_gs1,overlap_strand_UTR_S1)
@@ -373,6 +362,3 @@ overlap_strand_UTR_S3<-find_overlapping_gene(Serial$S_ch3,three_UTR$three_UTR_ch
                                              x_start_name = "start1", x_end_name = "end2", 
                                              is_strain = TRUE)
 #----------------
-overlap_strand_3UTR<-rbind(overlap_strand_UTR_B1,overlap_strand_UTR_gs1,overlap_strand_UTR_S1,
-                           overlap_strand_UTR_B2,overlap_strand_UTR_gs2,overlap_strand_UTR_S2,
-                           overlap_strand_UTR_B3,overlap_strand_UTR_gs3,overlap_strand_UTR_S3)
