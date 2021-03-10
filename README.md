@@ -10,3 +10,7 @@ update block PCR data and CDS overlapping site finding code
 > ## feedback  
 > strain의 deletion site가 gene과 무조건 일치하는 것은 아님. 이를 고려할 것  
 > 관련하여 primer locus를 확인하여 볼 것
+
+
+* 2021.03. week2  
+draw heatmap between strain-cds and debugging
