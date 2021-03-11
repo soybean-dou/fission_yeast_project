@@ -36,7 +36,7 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
                         overlap_percent <- (y[j,y_end_name]-y[j,y_start_name])/(y[j,y_end_name]-y[j,y_start_name])
                     }
                     #col1<-cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent)
-                    result<-rbind(result,cbind(x[i,ID],y[j,'ID'],y[j,y_start_name],overlap_percent))
+                    result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent))
                 }
                 else if((x[i,x_start_name]<=y[j,y_end_name])&(x[i,x_end_name]>=y[j,y_end_name])){
                     if(y[j,y_start_name]<x[i,x_start_name]){
@@ -45,11 +45,11 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
                     else if(y[j,y_start_name]>x[i,x_start_name]){
                         overlap_percent <- (y[j,y_end_name]-y[j,y_start_name])/(y[j,y_end_name]-y[j,y_start_name])
                     }
-                    result<-rbind(result,cbind(x[i,ID],y[j,'ID'],y[j,y_start_name],overlap_percent))
+                    result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent))
                 }
                 else if((x[i,x_start_name]>y[j,y_start_name])&(x[i,x_end_name]<y[j,y_end_name])){
                     overlap_percent <- (x[i,x_end_name]-x[i,x_start_name])/(y[j,y_end_name]-y[j,y_start_name])
-                    result<-rbind(result,cbind(x[i,ID],y[j,'ID'],y[j,y_start_name],overlap_percent))
+                    result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent))
                 }
                 if(!is.null(overlap_percent)){
                         if(overlap_percent<0){
@@ -65,10 +65,10 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
         pb$tick()
     }
     if(is_strain == TRUE){
-        #result <-as.data.frame(t(as.data.frame(apply(result, 1,modify_id))))
+        result <-as.data.frame(t(as.data.frame(apply(result, 1,modify_id))))
         result <- delete_duplicate(result)
     }else{
-        #result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id,is_strain=F))))
+        result<-as.data.frame(t(as.data.frame(apply(result, 1,modify_id,is_strain=F))))
         result <- delete_duplicate(result)
     }
     return(result)
