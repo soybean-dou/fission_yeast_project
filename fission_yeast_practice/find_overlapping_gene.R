@@ -375,3 +375,106 @@ ch3<-find_overlapping_gene(Serial$ch3,three_UTR$ch3,
 
 S_3utr<-mget(ls(pattern = "ch"))
 #----------------
+ch1<-subset(gene_data, seqid == "I" & type =="gene")
+ch1<-as.data.frame(t(as.data.frame(apply(ch1, 1,modify_id))))
+
+ch2<-subset(gene_data, seqid == "II" & type =="gene")
+ch2<-as.data.frame(t(as.data.frame(apply(ch2, 1,modify_id))))
+
+ch3<-subset(gene_data, seqid == "III" & type =="gene")
+ch3<-as.data.frame(t(as.data.frame(apply(ch3, 1,modify_id))))
+
+gene<-mget(ls(pattern = "ch"))
+
+five_UTR$ch1<-as.data.frame(t(as.data.frame(apply(five_UTR$ch1, 1,modify_id))))
+five_UTR$ch2<-as.data.frame(t(as.data.frame(apply(five_UTR$ch2, 1,modify_id))))
+five_UTR$ch3<-as.data.frame(t(as.data.frame(apply(five_UTR$ch3, 1,modify_id))))
+
+percent<-data.frame(1:nrow(utr5_overlap$ch1))
+
+df3<-data.frame()
+
+for(i in 1:nrow(utr5_overlap$ch1)){
+    df1<-subset(gene$ch1, attributes == utr5_overlap$ch1[i,2])
+    df2<-subset(five_UTR$ch1, attributes == utr5_overlap$ch1[i,2])
+    
+    percent<-((as.numeric(df2$end)-as.numeric(df2$start))/(as.numeric(df1$end)-as.numeric(df1$start)))
+    df3<-rbind(df3,cbind(utr5_overlap$ch1[i,1:4],percent,as.numeric(utr5_overlap$ch1[i,4])/percent))
+}
+
+
+i<-1
+while(i<=nrow(five_UTR$ch1)){
+    print(i)
+    j<-1
+    while(j<=nrow(five_UTR$ch1)){
+        if(i==j){
+            next;
+        }
+        if(five_UTR$ch1[i,'attributes'] == five_UTR$ch1[j,'attributes']){
+            five_UTR$ch1[i,'start']<-min(five_UTR$ch1[i,"start"],five_UTR$ch1[j,"start"])
+            five_UTR$ch1[i,'end']<-max(five_UTR$ch1[i,"end"],five_UTR$ch1[j,"end"])
+            five_UTR$ch1<-five_UTR$ch1[-j,]
+        }
+        j<-j+1
+    }
+    i<-i+1
+}
+
+list_1<-unlist(df3$`as.numeric(utr5_overlap$ch1[i, 4])/percent`)
+list_2<-normalize(list_1)
+
+for(i in 1:nrow(df3)){
+    df3$`as.numeric(utr5_overlap$ch1[i, 4])/percent`[i]<-list_2[i]
+}
+
+
+#-----------------------------------------------------------
+ch1<-subset(gene_data, type == "ncRNA" & seqid == "I")
+ch2<-subset(gene_data, type == "ncRNA" & seqid == "II")
+ch3<-subset(gene_data, type == "ncRNA" & seqid == "III")
+
+ncRNA<-mget(ls(pattern = "ch"))
+
+ch1<-find_overlapping_gene(GS$ch1, ncRNA$ch1,
+                           x_start_name = "start1", x_end_name = "end2", 
+                           is_strain = TRUE)
+
+ch2<-find_overlapping_gene(GS$ch2, ncRNA$ch2,
+                           x_start_name = "start1", x_end_name = "end2", 
+                           is_strain = TRUE)
+
+ch3<-find_overlapping_gene(GS$ch3, ncRNA$ch3,
+                           x_start_name = "start1", x_end_name = "end2", 
+                           is_strain = TRUE)
+
+GS_ncRNA<-mget(ls(pattern = "ch"))
+
+
+ch1<-find_overlapping_gene(Block$ch1, ncRNA$ch1,
+                           x_start_name = "start3", x_end_name = "end4", 
+                           is_strain = TRUE)
+
+ch2<-find_overlapping_gene(Block$ch2, ncRNA$ch2,
+                           x_start_name = "start3", x_end_name = "end4", 
+                           is_strain = TRUE)
+
+ch3<-find_overlapping_gene(Block$ch3, ncRNA$ch3,
+                           x_start_name = "start3", x_end_name = "end4", 
+                           is_strain = TRUE)
+
+B_ncRNA<-mget(ls(pattern = "ch"))
+
+ch1<-find_overlapping_gene(Serial$ch1, ncRNA$ch1,
+                           x_start_name = "start3", x_end_name = "end4", 
+                           is_strain = TRUE)
+
+ch2<-find_overlapping_gene(Serial$ch2, ncRNA$ch2,
+                           x_start_name = "start3", x_end_name = "end4", 
+                           is_strain = TRUE)
+
+ch3<-find_overlapping_gene(Serial$ch3, ncRNA$ch3,
+                           x_start_name = "start3", x_end_name = "end4", 
+                           is_strain = TRUE)
+
+S_ncRNA<-mget(ls(pattern = "ch"))
