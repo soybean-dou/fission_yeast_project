@@ -30,25 +30,25 @@ find_overlapping_gene<-function(x,y, x_start_name='start', x_end_name='end',
                 overlap_percent<-NULL
                 if((x[i,x_start_name]<=y[j,y_start_name])&(x[i,x_end_name]>=y[j,y_start_name])){
                     if(y[j,y_end_name]>=x[i,x_end_name]){
-                        overlap_percent <- (x[i,x_end_name]-y[j,y_start_name])/(y[j,y_end_name]-y[j,y_start_name])
+                        overlap_percent <- (x[i,x_end_name]-y[j,y_start_name])#/(y[j,y_end_name]-y[j,y_start_name])
                     }
                     else if(y[j,y_end_name]<x[i,x_end_name]){
-                        overlap_percent <- (y[j,y_end_name]-y[j,y_start_name])/(y[j,y_end_name]-y[j,y_start_name])
+                        overlap_percent <- (y[j,y_end_name]-y[j,y_start_name])#/(y[j,y_end_name]-y[j,y_start_name])
                     }
                     #col1<-cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent)
                     result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent))
                 }
                 else if((x[i,x_start_name]<=y[j,y_end_name])&(x[i,x_end_name]>=y[j,y_end_name])){
                     if(y[j,y_start_name]<x[i,x_start_name]){
-                        overlap_percent <- (y[j,y_end_name]-x[i,x_start_name])/(y[j,y_end_name]-y[j,y_start_name])
+                        overlap_percent <- (y[j,y_end_name]-x[i,x_start_name])#/(y[j,y_end_name]-y[j,y_start_name])
                     }
                     else if(y[j,y_start_name]>x[i,x_start_name]){
-                        overlap_percent <- (y[j,y_end_name]-y[j,y_start_name])/(y[j,y_end_name]-y[j,y_start_name])
+                        overlap_percent <- (y[j,y_end_name]-y[j,y_start_name])#/(y[j,y_end_name]-y[j,y_start_name])
                     }
                     result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent))
                 }
                 else if((x[i,x_start_name]>y[j,y_start_name])&(x[i,x_end_name]<y[j,y_end_name])){
-                    overlap_percent <- (x[i,x_end_name]-x[i,x_start_name])/(y[j,y_end_name]-y[j,y_start_name])
+                    overlap_percent <- (x[i,x_end_name]-x[i,x_start_name])#/(y[j,y_end_name]-y[j,y_start_name])
                     result<-rbind(result,cbind(x[i,ID],y[j,'attributes'],y[j,y_start_name],overlap_percent))
                 }
                 if(!is.null(overlap_percent)){
@@ -110,10 +110,10 @@ modify_id<-function(x,is_strain=T){
         result<-paste(id_split[1],id_split[2],sep = ".")
         x[1]<-gsub("ID=", "", result)
     }
-    id<-unlist(strsplit(x[2], ";"))[1]
+    id<-unlist(strsplit(x[9], ";"))[1]
     id_split<-unlist(strsplit(id,".",fixed = TRUE))
     result<-paste(id_split[1],id_split[2],sep = ".")
-    x[2]<-gsub("ID=", "", result)
+    x[9]<-gsub("ID=", "", result)
     return(x)
 }
 

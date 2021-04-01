@@ -71,8 +71,10 @@ ch2<-rbind(GS_5utr$ch2,B_5utr$ch2,S_5utr$ch2)
 ch3<-rbind(GS_5utr$ch3,B_5utr$ch3,S_5utr$ch3)
 
 utr5_overlap<-mget(ls(pattern = "ch"))
+utr5_overlap[[3]]
 
-for(k in 1:1){
+
+for(k in 1:3){
     utr5_overlap[[k]]<-utr5_overlap[[k]][order(utr5_overlap[[k]][1]),]
     
     strain_name<-utr5_overlap[[k]]$V1
@@ -114,19 +116,16 @@ for(k in 1:1){
     
     utr5_matrix<-matrix(ncol=length(utr5_name),nrow=length(strain_name))
     
-    utr5_name
-    strain_name
-    
     rownames(utr5_matrix)<-strain_name
     colnames(utr5_matrix)<-utr5_name
     
     for(h in 1:nrow(utr5_overlap[[k]])){
-        utr5_matrix[utr5_overlap[[k]][h,1], utr5_overlap[[k]][h,2]]<-as.numeric(df3[h,6])
+        utr5_matrix[utr5_overlap[[k]][h,1], utr5_overlap[[k]][h,2]]<-as.numeric(utr5_overlap[[k]][h,6])
     }
     
     png(filename=paste0("strain_5utr_ch",k,".png"),width=1200,height=800,unit="px",bg="transparent")
     p <- pheatmap(utr5_matrix, color = colorRampPalette(c("yellow", "red"))(100),
-                  cluster_row = FALSE, cluster_cols = F, main = paste("Strain-5UTR overlap percent in chromosome",as.character(k)), na_col = "white")
+                  cluster_row = FALSE, cluster_cols = F, main = paste("Strain-5UTR overlap percent in chromosome",as.character(k),"(deletion/gene)"), na_col = "white")
     dev.off()
 
 }

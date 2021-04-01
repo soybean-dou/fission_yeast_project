@@ -392,15 +392,39 @@ five_UTR$ch3<-as.data.frame(t(as.data.frame(apply(five_UTR$ch3, 1,modify_id))))
 
 percent<-data.frame(1:nrow(utr5_overlap$ch1))
 
-df3<-data.frame()
+ch1<-data.frame()
+ch2<-data.frame()
+ch3<-data.frame()
+
+utr5_overlap_<-mget(ls(pattern ="ch"))
+
+j=0
 
 for(i in 1:nrow(utr5_overlap$ch1)){
     df1<-subset(gene$ch1, attributes == utr5_overlap$ch1[i,2])
-    df2<-subset(five_UTR$ch1, attributes == utr5_overlap$ch1[i,2])
+    #df2<-subset(five_UTR$ch1, attributes == utr5_overlap$ch1[i,2])
     
-    percent<-((as.numeric(df2$end)-as.numeric(df2$start))/(as.numeric(df1$end)-as.numeric(df1$start)))
-    df3<-rbind(df3,cbind(utr5_overlap$ch1[i,1:4],percent,as.numeric(utr5_overlap$ch1[i,4])/percent))
+    percent<-(as.numeric(df1$end)-as.numeric(df1$start))
+    ch1<-rbind(ch1,cbind(utr5_overlap$ch1[i,1:4],percent,as.numeric(utr5_overlap$ch1[i,4])/percent))
 }
+
+for(i in 1:nrow(utr5_overlap$ch2)){
+    df1<-subset(gene$ch2, attributes == utr5_overlap$ch2[i,2])
+    #df2<-subset(five_UTR$ch1, attributes == utr5_overlap$ch1[i,2])
+    
+    percent<-(as.numeric(df1$end)-as.numeric(df1$start))
+    ch2<-rbind(ch2,cbind(utr5_overlap$ch2[i,1:4],percent,as.numeric(utr5_overlap$ch2[i,4])/percent))
+}
+
+for(i in 1:nrow(utr5_overlap$ch3)){
+    df1<-subset(gene$ch3, attributes == utr5_overlap$ch3[i,2])
+    #df2<-subset(five_UTR$ch1, attributes == utr5_overlap$ch1[i,2])
+    
+    percent<-(as.numeric(df1$end)-as.numeric(df1$start))
+    ch3<-rbind(ch3,cbind(utr5_overlap$ch3[i,1:4],percent,as.numeric(utr5_overlap$ch3[i,4])/percent))
+}
+
+utr5_overlap<-mget(ls(pattern = "ch"))
 
 
 i<-1
@@ -478,3 +502,5 @@ ch3<-find_overlapping_gene(Serial$ch3, ncRNA$ch3,
                            is_strain = TRUE)
 
 S_ncRNA<-mget(ls(pattern = "ch"))
+
+
