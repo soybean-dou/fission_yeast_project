@@ -124,11 +124,12 @@ for(k in 1:3){
     }
     
     png(filename=paste0("strain_5utr_ch",k,".png"),width=1200,height=800,unit="px",bg="transparent")
-    p <- pheatmap(utr5_matrix, color = colorRampPalette(c("yellow", "red"))(100),
+    p <- pheatmap(utr5_matrix, color = colorRampPalette(c("yellow", "red"))(100), breaks = 0:1,
                   cluster_row = FALSE, cluster_cols = F, main = paste("Strain-5UTR overlap percent in chromosome",as.character(k),"(deletion/gene)"), na_col = "white")
     dev.off()
 
 }
+dev.new()
 
 
 ch1<-rbind(GS_3utr$ch1,B_3utr$ch1,S_3utr$ch1)
