@@ -224,3 +224,15 @@ find_overlapping_gene_m2<-function(x,y, x_start_name='start', x_end_name='end',
 normalize <- function(x) {
     return((x-min(x))/(max(x)-min(x)))
 }
+
+find_GO_annotation<-function(x,y){
+    df<-data.frame();
+    for(i in 1:nrow(x)){
+        for(j in 1:nrow(y)){
+            if(x[i,"V2"]==y[i,"Sysmatic ID"]){
+                rbind(df,cbind(x[i,1:4],y[i,"function"]))
+            }
+        }
+    }
+    return(df);
+}

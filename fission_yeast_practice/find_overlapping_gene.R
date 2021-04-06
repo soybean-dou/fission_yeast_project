@@ -7,11 +7,14 @@
 # install.packages("progress")
 # install.packages("dplyr")
 # install.packages("seqinr")
+# install.packages("readxl")
 
 library(ape)
 library(stringr)
 library(dplyr)
 library(writexl)
+library(xlsx)
+library(readxl)
 library(progress)
 library(seqinr)
 library(RColorBrewer)
@@ -503,4 +506,9 @@ ch3<-find_overlapping_gene(Serial$ch3, ncRNA$ch3,
 
 S_ncRNA<-mget(ls(pattern = "ch"))
 
+
+#finding function of overlapping gene
+library(readxl)
+
+GO_annotation<-read_excel("DATA/gene_association.tsv.xlsx")
 
