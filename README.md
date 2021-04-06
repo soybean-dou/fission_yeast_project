@@ -14,6 +14,6 @@ update block PCR data and CDS overlapping site finding code
 * 2021.03. week2  
 draw heatmap between strain-cds and debugging
 
-* 2021.04. week2 
-find ncRNA overlap gene
+* 2021.04. week2  
+find ncRNA overlap gene  
 mapping GO annotation data and overlapping gene
